@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Albion</title>
+    <link rel="stylesheet" href="/main.css">
+</head>
+<body>
+    <table>
+        <thead>
+          <tr>
+            <th>Nombre</th>
+            <th>KillFrame</th>
+          </tr>
+        </thead>
+        <tbody id="tablaPersonas"></tbody>
+
+    <script>
+        // Realizar la solicitud para obtener el JSON
+        fetch('miembros.json')
+                .then(response => response.json())
+                .then(data => {
+                    const tablaPersonas = document.getElementById('tablaPersonas');
+                    data.forEach(persona => {
+                        const row = document.createElement('tr');
+                        const nombreCell = document.createElement('td');
+                        const edadCell = document.createElement('td');
+
+                        nombreCell.innerText = persona.Name;
+                        edadCell.innerText = persona.KillFame;
+
+                        row.appendChild(nombreCell);
+                        row.appendChild(edadCell);
+                        tablaPersonas.appendChild(row);
+                    });
+                })
+                .catch(error => console.error('Error al cargar el JSON:', error));
+      </script>
+</body>
+</html>
