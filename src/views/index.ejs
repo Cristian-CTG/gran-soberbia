@@ -5,33 +5,43 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Albion</title>
     <link rel="stylesheet" href="/main.css">
+    <%- include('partes/head')%>
 </head>
 <body>
-    <table>
+
+    <%- include('partes/navbar')%>
+    <center><table style="background: #ffffff; margin-top: 20px; margin-bottom: 20px;">
         <thead>
-          <tr>
-            <th>Nombre</th>
-            <th>KillFrame</th>
+          <tr style="background: #333; color: #ffffff; border: 1px solid #000;">
+            <th style="border: 1px solid #000; justify-content: center; align-items: center; text-align: center; padding: 4px;">Nombre</th>
+            <th style="border: 1px solid #000; justify-content: center; align-items: center; text-align: center; padding: 4px;">KillFrame</th>
+            <th style="border: 1px solid #000; justify-content: center; align-items: center; text-align: center; padding: 4px;">DeathFame</th>
           </tr>
         </thead>
-        <tbody id="tablaPersonas"></tbody>
+        <tbody id="tablaPersonas" style="border: 1px solid #000; justify-content: center; align-items: center; text-align: center; padding: 4px;"></tbody></center>
+    
 
     <script>
         // Realizar la solicitud para obtener el JSON
         fetch('miembros.json')
                 .then(response => response.json())
                 .then(data => {
+                    data.sort((a, b) => b.DeathFame - a.DeathFame);
                     const tablaPersonas = document.getElementById('tablaPersonas');
                     data.forEach(persona => {
                         const row = document.createElement('tr');
                         const nombreCell = document.createElement('td');
-                        const edadCell = document.createElement('td');
+                        const killframeCell = document.createElement('td');
+                        const DeathFameCell = document.createElement('td');
 
                         nombreCell.innerText = persona.Name;
-                        edadCell.innerText = persona.KillFame;
+                        killframeCell.innerText = persona.KillFame;
+                        DeathFameCell.innerText = persona.DeathFame;
 
                         row.appendChild(nombreCell);
-                        row.appendChild(edadCell);
+                        row.appendChild(killframeCell);
+                        row.appendChild(DeathFameCell);
+
                         tablaPersonas.appendChild(row);
                     });
                 })
