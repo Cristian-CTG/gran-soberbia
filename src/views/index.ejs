@@ -43,9 +43,12 @@
 
         <script>
             // Realizar la solicitud para obtener el JSON
+            let datosM = {};
+            let datosG = {};
             fetch('miembros.json')
                 .then(response => response.json())
                 .then(data => {
+                    datosM = data;
                     data.sort((a, b) => b.DeathFame - a.DeathFame);
                     const tablaPersonas = document.getElementById('tablaPersonas');
                     data.forEach(persona => {
@@ -67,17 +70,22 @@
                 })
                 .catch(error => console.error('Error al cargar el JSON:', error));
 
-
+            const datosJsonDiv = document.getElementById('datos');
             //Datos gremio
             fetch('gremio.json')
                 .then(response => response.json())
                 .then(data => {
+                    datosG = data;
 
-                    const datosJsonDiv = document.getElementById('datos');
                     const dt = document.createElement('h1');
+                    const dtM = document.createElement('h1');
+
+
                     dt.innerText = ('Fundador: ' + data.FounderName);
-                    console.log('Fundador: ' + data.FounderName);
+                    dtM.innerText = ('Miembros: ' + data.MemberCount)
                     datosJsonDiv.append(dt)
+                    datosJsonDiv.append(dtM)
+
                 })
                 .catch(error => console.error('Error al cargar el JSON:', error));
         </script>

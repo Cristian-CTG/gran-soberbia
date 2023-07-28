@@ -61,4 +61,5 @@ body{
     display: flex;
     position: relative;
     color: rgb(164, 174, 182);
+    margin-left: 15px;
 }
