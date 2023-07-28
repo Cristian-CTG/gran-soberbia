@@ -8,6 +8,8 @@ const apiUrl = 'https://gameinfo.albiononline.com/api/gameinfo';
 
 // Endpoint para buscar información
 const endpoint = '/guilds/gdwkqfrcQHq9loFSPVIx5A/members';
+const endpoint2 = '/guilds/gdwkqfrcQHq9loFSPVIx5A';
+
 var dt = {};
 let nombre;
 // Realizar el llamado a la API usando Axios
@@ -33,18 +35,32 @@ axios.get(apiUrl + endpoint)
     console.error('Error al hacer el llamado a la API:', error);
   });
 
-  fs.readFile('src/public/miembros.json', 'utf8', (err, data) => {
-    if (err) {
-      console.error('Error al leer el archivo JSON:', err);
-      return;
-    }
-  
-    // Analizar el contenido JSON para obtener un objeto JavaScript
-    const jsonData = JSON.parse(data);
-  
-    // Ruta para renderizar el archivo EJS y pasar los datos del JSON como variables
-    router.get('/', (req, res) => {res.render('index', { data: jsonData }); });
+  axios.get(apiUrl + endpoint2)
+  .then(response => {
+    // La respuesta de la API estará en la variable "response.data"
+    
+    nombre = response.data.Name;
+    console.log('gremio es:' + nombre);
+    dt = response.data
+    const datosJSON = JSON.stringify(dt); 
+    
+    fs.writeFile('src/public/gremio.json', datosJSON, (err) => {
+      if (err) {
+        console.error('Error al escribir el archivo:', err);
+      } else {
+        console.log('Archivo JSON creado exitosamente.');
+      }
+    });
+
   })
+  .catch(error => {
+    console.error('Error al hacer el llamado a la API:', error);
+  });
+
+
+    // Ruta para renderizar el archivo EJS y pasar los datos del JSON como variables
+    router.get('/', (req, res) => {res.render('index'); });
+
   
 
 
